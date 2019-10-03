@@ -1,5 +1,4 @@
 FROM ubuntu:16.04
-MAINTAINER Jonathan Nagayoshi
 WORKDIR /tmp
 RUN apt-get update
 RUN apt-get install -y wget curl
@@ -10,6 +9,8 @@ RUN mv rancher-v2.3.0/* /usr/bin
 RUN curl -LO https://storage.googleapis.com/kubernetes-release/release/`curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt`/bin/linux/amd64/kubectl
 RUN chmod +x ./kubectl
 RUN mv ./kubectl /usr/bin/kubectl
+COPY docker-entrypoint.sh /usr/local/bin/
+ENTRYPOINT ["docker-entrypoint.sh"]
 
-ENTRYPOINT [ "/bin/bash" ]
+CMD [ "rancher" ]
 
